@@ -4,7 +4,7 @@ from time import time
 import numpy as np
 from sklearn import metrics
 from sklearn.metrics import confusion_matrix
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 
@@ -25,17 +25,25 @@ X_test = sc.transform(X_test)
 
 # Training the Kernel SVM model on the Training set
 t0 = time()
-classifier = SVC(C=20, kernel='rbf', random_state=0, probability=True)
-classifier.fit(X_train, y_train)
+grid_params = {
+    'C': [10,1e2, 1e3, 5e3, 1e4]
+}
+
+gs = GridSearchCV(
+    SVC(kernel='rbf',probability=True), grid_params, verbose=1, cv=5, n_jobs=-1
+)
+gs_results = gs.fit(X_train, y_train)
 print("SVM Training done in %0.3fs\n" % (time() - t0))
+print("Best estimator after cross validation:")
+print("C-support - %d\n" % gs.best_estimator_.C)
 
 # Testing
 t0 = time()
-y_pred = classifier.predict(X_test)
+y_pred = gs.predict(X_test)
 print("SVM Testing done in %0.3fs\n" % (time() - t0))
 
 # ROC Curve plot
-probs = classifier.predict_proba(X_test)
+probs = gs.predict_proba(X_test)
 probs = probs[:, 1]
 auc = metrics.roc_auc_score(y_test, probs)
 print('AUC: %.2f\n' % auc)
