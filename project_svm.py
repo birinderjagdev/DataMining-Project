@@ -26,11 +26,11 @@ X_test = sc.transform(X_test)
 # Training the Kernel SVM model on the Training set
 t0 = time()
 grid_params = {
-    'C': [10,1e2, 1e3, 5e3, 1e4]
+    'C': [0.1, 0.5, 1, 2, 3, 4, 5, 10, 15, 20, 30, 100]
 }
 
 gs = GridSearchCV(
-    SVC(kernel='rbf',probability=True), grid_params, verbose=1, cv=5, n_jobs=-1
+    SVC(kernel='rbf', probability=True), grid_params, verbose=1, cv=5, n_jobs=-1
 )
 gs_results = gs.fit(X_train, y_train)
 print("SVM Training done in %0.3fs\n" % (time() - t0))

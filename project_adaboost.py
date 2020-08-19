@@ -6,7 +6,6 @@ from sklearn.ensemble import AdaBoostClassifier
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.preprocessing import StandardScaler
-from sklearn.tree import DecisionTreeClassifier
 
 import utils
 
