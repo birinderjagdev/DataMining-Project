@@ -2,15 +2,11 @@
 from time import time
 
 import numpy as np
-from sklearn import metrics
 from sklearn.ensemble import AdaBoostClassifier
-from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
-
-import utils
 
 # Load data
 data = np.loadtxt("abalone.csv", delimiter=",")
